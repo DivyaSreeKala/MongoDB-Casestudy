@@ -46,22 +46,51 @@
               <th scope="col">Actions</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <!-- <th scope="row">1</th> -->
-              <%for(let i=0;i<data.length;i++){%>
-              <td><%=data[i].employeeName%></td>
-              <td><%=data[i].emploeeDesignation%></td>
-              <td><%=data[i].employeeLocation%></td>
-              <td><%=data[i].Salary%></td>
-              <td>
-                    <button>Update</button>
-                    <button>Delete</button>
+          <tbody className="d-block">
+            <!-- <th scope="row">1</th> -->
+            <%for(let i=0;i<data.length;i++){%>
+                <tr>
+              <td scope="col"><%=data[i].employeeName%></td>
+              <td scope="col"><%=data[i].emploeeDesignation%></td>
+              <td scope="col"><%=data[i].employeeLocation%></td>
+              <td scope="col"><%=data[i].Salary%></td>
+              <td scope="col">
+                <div class="d-flex flex-row h-full">
+                    <div style="width:80px"><a href="/employee/edit-emp/<%=data[i]._id%>" class="w-full"><button class='w-75 btn btn-outline-warning p-1'>Edit</button></a>
+                    </div>
+                    
+                    <div style="width:80px"><form id="onFormDelete" action="/employee/delete-employee/<%=data[i]._id%>?_method=DELETE" method="post" class="w-full">
+                        <button class='btn btn-outline-danger w-75 p-1' type="submit">Delete</button>
+                        </form>
+                    </div>
+                  </div>
               </td>
-              <%}%>
             </tr>
+              <%}%>
           </tbody>
       </table>
     </div>
+    <% if( typeof message !== "undefined" ) { %>
+      <script>
+        // let flag = message;
+          setTimeout(()=>{
+              // document.getElementById('text').innerText="update successful"
+              
+                alert('Deleted Successfully')
+                window.location.href = '/employee/list-employee'
+              
+              
+          },1000)
+            
+            </script>
+          <%}%>
+          <script>
+            document.getElementById('onFormDelete').addEventListener('submit',function(e){
+              const confirmed = confirm("Are you sure?")
+              if(!confirmed){
+                e.preventDefault();
+              } 
+            })
+          </script>
 </body>
 </html>
